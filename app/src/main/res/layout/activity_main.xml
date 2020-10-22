@@ -10,11 +10,22 @@
         android:id="@+id/btn_scan"
         android:layout_width="222dp"
         android:layout_height="0dp"
-        android:layout_marginTop="242dp"
+        android:layout_marginTop="216dp"
+        android:layout_marginBottom="43dp"
         android:text="Scan now"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Add_btn"
+        android:layout_width="219dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="256dp"
+        android:text="Add to database"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
