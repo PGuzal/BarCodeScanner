@@ -7,7 +7,7 @@
     tools:context=".ResultActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/result_database"
         android:layout_width="280dp"
         android:layout_height="231dp"
         android:layout_marginStart="34dp"

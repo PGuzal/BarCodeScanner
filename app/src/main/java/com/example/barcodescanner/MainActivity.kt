@@ -11,7 +11,6 @@ import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                 if(result.contents == null){
                     Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show()
                 }else{
+                    intent.putExtra("result_code",result.contents)
                     startActivity(intent)
                 }
             }

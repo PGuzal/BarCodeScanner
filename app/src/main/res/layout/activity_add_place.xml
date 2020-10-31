@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="number" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="numberDecimal|numberSigned" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="numberDecimal|numberSigned" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="numberDecimal|numberSigned"/>
 
             <TextView
                 android:id="@+id/textView7"
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="numberDecimal|numberSigned" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="numberDecimal|numberSigned" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="numberDecimal|numberSigned" />
 
             <TextView
                 android:id="@+id/Result_view"
@@ -131,6 +131,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add" />
+
+            <Button
+                android:id="@+id/btn_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Menu" />
         </LinearLayout>
     </ScrollView>
 
