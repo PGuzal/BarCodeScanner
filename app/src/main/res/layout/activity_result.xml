@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2c5f2d"
     tools:context=".ResultActivity">
 
     <TextView
@@ -14,6 +15,7 @@
         android:layout_marginTop="140dp"
         android:layout_marginEnd="34dp"
         android:text="TextView"
+        android:background="#98bc62"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +29,7 @@
         android:layout_marginEnd="42dp"
         android:layout_marginBottom="192dp"
         android:text="Add to database"
+        android:background="#98bc62"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.56"
@@ -38,6 +41,7 @@
         android:layout_height="81dp"
         android:layout_marginBottom="59dp"
         android:text="Menu"
+        android:background="#98bc62"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

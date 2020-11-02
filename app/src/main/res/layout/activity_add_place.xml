@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2c5f2d"
     tools:context=".AddPlace">
 
     <ScrollView
@@ -124,18 +125,21 @@
                 android:id="@+id/scan_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#98bc62"
                 android:text="Scan" />
 
             <Button
                 android:id="@+id/btn_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#98bc62"
                 android:text="Add" />
 
             <Button
                 android:id="@+id/btn_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#98bc62"
                 android:text="Menu" />
         </LinearLayout>
     </ScrollView>
