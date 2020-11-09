@@ -18,14 +18,16 @@
 
             <TextView
                 android:id="@+id/result_database"
-                android:layout_width="271dp"
+                android:layout_width="281dp"
                 android:layout_height="305dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="100dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="60dp"
                 android:background="#98bc62"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="15sp"
+                android:textStyle="italic" />
 
             <Button
                 android:id="@+id/btn_addAc"
@@ -36,7 +38,8 @@
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="30dp"
                 android:background="#98bc62"
-                android:text="Add to database" />
+                android:text="Dodaj do bazy"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/menu_btn"
@@ -47,7 +50,8 @@
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="59dp"
                 android:background="#98bc62"
-                android:text="Menu" />
+                android:text="Menu"
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 

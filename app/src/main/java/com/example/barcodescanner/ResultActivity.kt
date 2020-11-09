@@ -48,7 +48,7 @@ class ResultActivity : AppCompatActivity() {
                 if(product.code.equals("brak")){
                     results_text = "Nie znaleziono kodu w bazie"
                 }else {
-                    results_text = "Code: "+product.code+"\nCalories: "+product.calorie+"\nFat: "+product.fat+"\nSaturated fat: "+product.saturated+"\nCarbs: "+product.carb+"\nSugar: "+product.sugar+"\nProtein: "+product.protein+"\nSodium: "+product.sodium
+                    results_text = "Wartość odżywcza (na 100g/ml):\n\nKod: "+product.code+"\nWartość energetyczna: "+product.calorie+" kcal\nTłuszcz: "+product.fat+" g\nw tym kwasy tłuszczowe nasycone: "+product.saturated+" g\nWęglowodany: "+product.carb+" g\nw tym cukry: "+product.sugar+" g\nBiałko: "+product.protein+" g\nSól: "+product.sodium+"g"
                 }
                 result_database.setText(results_text).toString()
             }

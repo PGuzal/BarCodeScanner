@@ -31,7 +31,10 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
-                android:text="Calorie" />
+                android:text="Wartość energetyczna"
+                android:textColor="#d8edd8"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/Calorie_entry"
@@ -42,6 +45,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
+                android:textColor="#d8edd8"
                 android:inputType="number" />
 
             <TextView
@@ -52,7 +56,10 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
-                android:text="Fat" />
+                android:text="Tłuszcz"
+                android:textColor="#d8edd8"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/Fat_entry"
@@ -63,6 +70,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
+                android:textColor="#d8edd8"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
@@ -73,7 +81,10 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
-                android:text="Saturated" />
+                android:text="w tym kwasy tłuszczowe nasycone"
+                android:textColor="#d8edd8"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/Saturated_entry"
@@ -84,6 +95,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
+                android:textColor="#d8edd8"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
@@ -94,7 +106,10 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
-                android:text="Carb" />
+                android:text="Węglowodany"
+                android:textColor="#d8edd8"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/Carb_entry"
@@ -105,6 +120,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
+                android:textColor="#d8edd8"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
@@ -115,7 +131,10 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
-                android:text="Sugar" />
+                android:text="w tym cukry"
+                android:textColor="#d8edd8"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/Sugar_entry"
@@ -126,6 +145,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
+                android:textColor="#d8edd8"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
@@ -136,7 +156,10 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
-                android:text="Protein" />
+                android:text="Białko"
+                android:textColor="#d8edd8"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/Protein_entry"
@@ -147,6 +170,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
+                android:textColor="#d8edd8"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
@@ -157,7 +181,10 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
-                android:text="Sodium" />
+                android:text="Sól"
+                android:textColor="#d8edd8"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/Sodium_entry"
@@ -168,6 +195,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:textColor="#d8edd8"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
@@ -190,7 +218,8 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
                 android:background="#98bc62"
-                android:text="Scan" />
+                android:text="Zeskanuj"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btn_add"
@@ -201,7 +230,8 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
                 android:background="#98bc62"
-                android:text="Add" />
+                android:text="Dodaj"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btn_menu"
@@ -212,7 +242,8 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="3dp"
                 android:background="#98bc62"
-                android:text="Menu" />
+                android:text="Menu"
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 
