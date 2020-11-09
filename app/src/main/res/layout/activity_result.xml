@@ -7,42 +7,48 @@
     android:background="#2c5f2d"
     tools:context=".ResultActivity">
 
-    <TextView
-        android:id="@+id/result_database"
-        android:layout_width="280dp"
-        android:layout_height="231dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="34dp"
-        android:text="TextView"
-        android:background="#98bc62"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_addAc"
-        android:layout_width="283dp"
-        android:layout_height="91dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="192dp"
-        android:text="Add to database"
-        android:background="#98bc62"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/menu_btn"
-        android:layout_width="277dp"
-        android:layout_height="81dp"
-        android:layout_marginBottom="59dp"
-        android:text="Menu"
-        android:background="#98bc62"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/result_database"
+                android:layout_width="271dp"
+                android:layout_height="305dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="60dp"
+                android:background="#98bc62"
+                android:text="TextView" />
+
+            <Button
+                android:id="@+id/btn_addAc"
+                android:layout_width="283dp"
+                android:layout_height="91dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="30dp"
+                android:background="#98bc62"
+                android:text="Add to database" />
+
+            <Button
+                android:id="@+id/menu_btn"
+                android:layout_width="277dp"
+                android:layout_height="81dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="59dp"
+                android:background="#98bc62"
+                android:text="Menu" />
+        </LinearLayout>
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>
