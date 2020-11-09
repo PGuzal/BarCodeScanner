@@ -12,6 +12,11 @@ import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_add_place.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_result.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.IOException
 
 class AddPlace : AppCompatActivity() {
     val result = ""
@@ -27,11 +32,15 @@ class AddPlace : AppCompatActivity() {
             val Sugar = Sugar_entry.text
             val Protein = Protein_entry.text
             val Sodium = Sodium_entry.text
-            val code_product = Result_view.text.toString()
+            val Barcode = Result_view.text.toString()
             if(Calorie.isBlank() || Fat.isBlank() || Saturated.isBlank() || Carb.isBlank() || Sugar.isBlank() || Protein.isBlank() || Sodium.isBlank()){
                 Toast.makeText(this,"Nie uzupełniłeś jednego z pól. Jeśli nie znasz wartości wpisz 0.", Toast.LENGTH_LONG).show()
-            }else if(code_product.isBlank()){
+            }else if(Barcode.isBlank()){
                 Toast.makeText(this,"Nie można wprowadzić produktu do bazy bez kodu kreskowego.", Toast.LENGTH_LONG).show()
+            }else {
+                val url = "http://10.0.2.2:5000/save"
+                val json = "{\"code\": \"$Barcode\", \"calorie\": \"$Calorie\", \"fat\": \"$Fat\", \"saturated\": \"$Saturated\", \"carb\": \"$Carb\", \"sugar\": \"$Sugar\", \"protein\": \"$Protein\", \"sodium\": \"$Sodium\"}"
+                saveJSON(url, json)
             }
         }
         scan_btn.setOnClickListener {
@@ -59,5 +68,22 @@ class AddPlace : AppCompatActivity() {
         }else{
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    fun saveJSON(url: String, json: String) {
+        val thread = Thread(Runnable {
+            val client = OkHttpClient()
+            val mediaType = "application/json; charset=utf-8".toMediaType()
+            val request = Request.Builder()
+                .url(url)
+                .post(json.toRequestBody(mediaType))
+                .build()
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                //możnaby dac jakies wyswietlaneie info ze GREAT JOB JSON
+            }
+
+        })
+        thread.start()
     }
 }
