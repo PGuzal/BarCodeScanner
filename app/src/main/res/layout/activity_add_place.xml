@@ -27,12 +27,20 @@
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:text="Calorie" />
 
             <EditText
                 android:id="@+id/Calorie_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:ems="10"
                 android:inputType="number" />
 
@@ -40,12 +48,20 @@
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:text="Fat" />
 
             <EditText
                 android:id="@+id/Fat_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:ems="10"
                 android:inputType="numberDecimal|numberSigned" />
 
@@ -53,12 +69,20 @@
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:text="Saturated" />
 
             <EditText
                 android:id="@+id/Saturated_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:ems="10"
                 android:inputType="numberDecimal|numberSigned" />
 
@@ -66,25 +90,41 @@
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:text="Carb" />
 
             <EditText
                 android:id="@+id/Carb_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:ems="10"
-                android:inputType="numberDecimal|numberSigned"/>
+                android:inputType="numberDecimal|numberSigned" />
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:text="Sugar" />
 
             <EditText
                 android:id="@+id/Sugar_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:ems="10"
                 android:inputType="numberDecimal|numberSigned" />
 
@@ -92,12 +132,20 @@
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:text="Protein" />
 
             <EditText
                 android:id="@+id/Protein_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:ems="10"
                 android:inputType="numberDecimal|numberSigned" />
 
@@ -105,12 +153,20 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:text="Sodium" />
 
             <EditText
                 android:id="@+id/Sodium_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:inputType="numberDecimal|numberSigned" />
 
@@ -118,6 +174,10 @@
                 android:id="@+id/Result_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="10dp"
                 android:text=""
                 android:textAlignment="center" />
 
@@ -125,6 +185,10 @@
                 android:id="@+id/scan_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:background="#98bc62"
                 android:text="Scan" />
 
@@ -132,6 +196,10 @@
                 android:id="@+id/btn_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:background="#98bc62"
                 android:text="Add" />
 
@@ -139,6 +207,10 @@
                 android:id="@+id/btn_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
                 android:background="#98bc62"
                 android:text="Menu" />
         </LinearLayout>
