@@ -3,116 +3,100 @@ package serwer;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import java.net.*;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Statement;
+import com.sun.net.httpserver.*;
 
 public class Serwer {
 
-    static Vector<ClientHandler> MembersList = new Vector<>();
-    static int i = 0;
-
     public static void main(String[] args) throws IOException {
+    	HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8000), 0);
+    	ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor)Executors.newFixedThreadPool(10);
+    	server.createContext("/get", new  HttpHandler() {
+    		@Override
+    	    public void handle(HttpExchange exchange) throws IOException {
+    			try {
+    				List data = new ArrayList();
+    				JSONObject json = receiveJSON(exchange);
+    				data.add(json.get("code").toString());
+    				String response = connectDB(true, data);
+	    	    	sendJSON(exchange, response);
+    	        } catch (IOException e) {
+                    e.printStackTrace();
+                    throw e;
+                }	    	    	
+    		}
+    	});
+    	server.createContext("/save", new  HttpHandler() {
+    		@Override
+    	    public void handle(HttpExchange exchange) throws IOException {
+    			try {
+    				List data = new ArrayList();
+    				JSONObject json = receiveJSON(exchange);
+    				data.add(json.get("code").toString());
+    				data.add(json.get("calorie").toString());
+    				data.add(json.get("fat").toString());
+    				data.add(json.get("saturated").toString());
+    				data.add(json.get("carb").toString());
+    				data.add(json.get("sugar").toString());
+    				data.add(json.get("protein").toString());
+    				data.add(json.get("sodium").toString());
+    				String response = connectDB(false, data);
+	    	    	sendJSON(exchange, response);
+    	        } catch (IOException e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+    		}
+    	});
+    	server.setExecutor(threadPoolExecutor);
+    	server.start();
+    	System.out.println("Server started on port 8000");
+    }
 
-        ServerSocket serversocket = new ServerSocket(1234);
-        Socket socket;
-        System.out.println("Server is working");
-        while (true) {
-            socket = serversocket.accept();
-            System.out.println("New client request received : " + socket);
-            DataInputStream inputData = new DataInputStream(socket.getInputStream());
-            DataOutputStream outputData = new DataOutputStream(socket.getOutputStream());
-            ClientHandler newMember = new ClientHandler(socket, "members " + i, inputData, outputData);
-            Thread t = new Thread(newMember);
-            MembersList.add(newMember);
-            t.start();
-            i++;
+    public static JSONObject receiveJSON(HttpExchange exchange) throws IOException {
+    	try {
+    		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), "UTF-8"));
+    		JSONTokener tokener = new JSONTokener(bufferedReader);
+    	    JSONObject json = new JSONObject(tokener);
+    		return json;
+    	}catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }    
+    
+    public static void sendJSON(HttpExchange exchange, String response) throws IOException {
+    	try {
+    		exchange.getResponseHeaders().set("Content-Type", "appication/json");
+            exchange.sendResponseHeaders(200, response.length());
+            OutputStream os = exchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+    	} catch (IOException e) {
+            e.printStackTrace();
+            throw e;
         }
     }
-}
-
-class ClientHandler implements Runnable {
-    Scanner scn = new Scanner(System.in);
-    private String memberName;
-    final DataInputStream inputData;
-    final DataOutputStream outputData;
-    Socket socket;
-    boolean isloggedin; 
-    static int socketClose = 0;
-
-    public ClientHandler(Socket socket, String memberName,
-            DataInputStream inputData, DataOutputStream outputData) {
-        this.inputData = inputData;
-        this.outputData = outputData;
-        this.memberName = memberName;
-        this.socket = socket;
-        this.isloggedin=true; 
-    }
-    @Override
-    public void run() {
-        String received;
-        List data = new ArrayList<>();
-        data.add("20625071");
-        data.add(1);
-        data.add(2);
-        data.add(3);
-        data.add(4);
-        data.add(5);
-        data.add(6);
-        data.add(7.4);
-        while (true) {
-            try {
-                //odbior wiadomoœci
-            	connectDB(true, data);
-            	received = inputData.readUTF();
-                System.out.println("["+this.memberName+"] "+received);
-                String Message= received;
-                if (received.equals("logout")) {
-                    this.isloggedin=false; 
-                    break;
-                }else{
-                 for (ClientHandler mc : Serwer.MembersList) {
-                    if(mc.memberName.equals(this.memberName) == false && mc.isloggedin == true) {
-                    mc.outputData.writeUTF("["+this.memberName + "]" +": " + Message);
-                    }
-                }}}
-            catch (IOException e) {
-                e.printStackTrace();
-            }}
-            try{
-                socketClose=0;
-                 for (ClientHandler mc: Serwer.MembersList){
-                    if(mc.isloggedin== true){
-                        this.inputData.close();
-                        this.outputData.close();
-                        break;
-                    }else{
-                        socketClose++;
-                    }
-                }
-                if(socketClose == Serwer.MembersList.size()){
-                        this.inputData.close();
-                        this.outputData.close();
-                        socket.close();
-                        System.exit(0);
-                }
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-    }
-            
-    public void connectDB(Boolean isGet, List data) {
+    
+    public static String connectDB(Boolean isGet, List data) {
     	List results = new ArrayList();
     	Boolean inDB = false;
+    	String jsonString = "";
     	try{
     		Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/barcode_data","root", "");
             Statement statement = connection.createStatement();
-            System.out.print("Database is connected !");
+            System.out.println("Database is connected!");
             String sql_check = "SELECT * FROM barcode WHERE code = "+data.get(0)+";";
             ResultSet check = statement.executeQuery(sql_check);
             if(check.next()) {
@@ -123,42 +107,35 @@ class ClientHandler implements Runnable {
             		inDB = true;
             	}
             }
-            System.out.print(inDB);;
             if(isGet) {
             	if(inDB) {
 	            	String sql_select = "SELECT * FROM barcode WHERE code = "+data.get(0)+";";
 	            	ResultSet result = statement.executeQuery(sql_select);
 	            	if (result.next()) {
-		            	results.add(result.getString("code"));
-		            	results.add(result.getString("calorie"));
-		            	results.add(result.getString("fat"));
-		            	results.add(result.getString("saturated"));
-		            	results.add(result.getString("carb"));
-		            	results.add(result.getString("sugar"));
-		            	results.add(result.getString("protein"));
-		            	results.add(result.getString("sodium"));
-		            	System.out.print(results);
+	            		jsonString = "{\"code\": "+result.getString("code")+", \"calorie\": "+result.getString("calorie")+", \"fat\": "+result.getString("fat")+", \"saturated\": "+result.getString("saturated")+", \"carb\": "+result.getString("carb")+", \"sugar\": "+result.getString("sugar")+", \"protein\": "+result.getString("protein")+", \"sodium\": "+result.getString("sodium")+"}";
 	            	}
             	}
             	else {
-            		System.out.println("No data");
+            		jsonString = "{\"code\": \"brak\"}";
             	}
             }	
             else {
             	if(inDB) {
-            		System.out.println("Already exists");
+            		jsonString = "{\"message\": \"Pobrany kod obecny jest w bazie\"}";
             	}
             	else {
 	            	String sql_insert = "INSERT INTO barcode(code, calorie, fat, saturated, carb, sugar, protein, sodium) VALUES ("+data.get(0)+","+data.get(1)+","+data.get(2)+","+data.get(3)+","+data.get(4)+","+data.get(5)+","+data.get(6)+","+data.get(7)+");";
 	            	statement.executeUpdate(sql_insert);
+	            	jsonString = "{\"message\": \"Dodano dane  do bazy\"}";
             	}
             }
             statement.close();
             connection.close();
          }
          catch(Exception e) {
-            System.out.print("Do not connect to DB - Error:"+e);
+            System.out.println("Do not connect to DB - Error:"+e);
          }
+		return jsonString;
     }
-    
 }
+

@@ -11,5 +11,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/agors/Desktop/Studia/Przetwarzanie rozproszone w zastosowaniach medycznych/Projekt/Mój/Kod/BarCodeScanner/Serwer/Serwer/json-20140107.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="Serwer/build/classes"/>
 </classpath>

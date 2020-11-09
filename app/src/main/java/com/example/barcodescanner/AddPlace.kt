@@ -2,21 +2,20 @@ package com.example.barcodescanner
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toast.makeText
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_add_place.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_result.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
+
 
 class AddPlace : AppCompatActivity() {
     val result = ""
@@ -38,7 +37,7 @@ class AddPlace : AppCompatActivity() {
             }else if(Barcode.isBlank()){
                 Toast.makeText(this,"Nie można wprowadzić produktu do bazy bez kodu kreskowego.", Toast.LENGTH_LONG).show()
             }else {
-                val url = "http://10.0.2.2:5000/save"
+                val url = "http://10.0.2.2:8000/save"
                 val json = "{\"code\": \"$Barcode\", \"calorie\": \"$Calorie\", \"fat\": \"$Fat\", \"saturated\": \"$Saturated\", \"carb\": \"$Carb\", \"sugar\": \"$Sugar\", \"protein\": \"$Protein\", \"sodium\": \"$Sodium\"}"
                 saveJSON(url, json)
             }
@@ -71,19 +70,35 @@ class AddPlace : AppCompatActivity() {
     }
 
     fun saveJSON(url: String, json: String) {
+        var result = "FIRST"
         val thread = Thread(Runnable {
-            val client = OkHttpClient()
-            val mediaType = "application/json; charset=utf-8".toMediaType()
-            val request = Request.Builder()
-                .url(url)
-                .post(json.toRequestBody(mediaType))
-                .build()
-            client.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) throw IOException("Unexpected code $response")
-                //możnaby dac jakies wyswietlaneie info ze GREAT JOB JSON
-            }
-
+                val client = OkHttpClient()
+                val mediaType = "application/json; charset=utf-8".toMediaType()
+                val request = Request.Builder()
+                    .url(url)
+                    .post(json.toRequestBody(mediaType))
+                    .build()
+                client.newCall(request).execute().use { response ->
+                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                    val data = response?.body?.string()
+                    val obj: JsonObject = Gson().fromJson(data, JsonObject::class.java)
+                    result = obj["message"].asString
+                    showToast(result);
+                }
         })
-        thread.start()
+        try {
+            thread.start()
+        } catch (e: Exception) {
+            Toast.makeText(this,"Nie udało się nawiązać połączenia z bazą.", Toast.LENGTH_LONG).show()
+        }
+    }
+    fun showToast(toast: String?) {
+        runOnUiThread {
+            Toast.makeText(
+                this@AddPlace,
+                toast,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
