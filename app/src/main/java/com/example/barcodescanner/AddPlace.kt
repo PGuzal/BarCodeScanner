@@ -10,9 +10,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_add_place.*
+import kotlinx.android.synthetic.main.activity_result.*
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
@@ -39,6 +39,7 @@ class AddPlace : AppCompatActivity() {
             }else {
                 val url = "http://10.0.2.2:8000/save"
                 val json = "{\"code\": \"$Barcode\", \"calorie\": \"$Calorie\", \"fat\": \"$Fat\", \"saturated\": \"$Saturated\", \"carb\": \"$Carb\", \"sugar\": \"$Sugar\", \"protein\": \"$Protein\", \"sodium\": \"$Sodium\"}"
+                Toast.makeText(this,"Prosze poczekać na odpowiedź z serwera.", Toast.LENGTH_LONG).show()
                 saveJSON(url, json)
             }
         }
@@ -63,14 +64,13 @@ class AddPlace : AppCompatActivity() {
                     textView.setText(result.contents).toString()
                 }
             }
-
         }else{
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
     fun saveJSON(url: String, json: String) {
-        var result = "FIRST"
+        var result = ""
         val thread = Thread(Runnable {
                 val client = OkHttpClient()
                 val mediaType = "application/json; charset=utf-8".toMediaType()
@@ -78,19 +78,20 @@ class AddPlace : AppCompatActivity() {
                     .url(url)
                     .post(json.toRequestBody(mediaType))
                     .build()
-                client.newCall(request).execute().use { response ->
+            client.newCall(request).enqueue(object: Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    showToast("Nie udało się nawiązać połączenia z bazą.")
+                }
+                override fun onResponse(call: Call, response: Response) {
                     if (!response.isSuccessful) throw IOException("Unexpected code $response")
                     val data = response?.body?.string()
                     val obj: JsonObject = Gson().fromJson(data, JsonObject::class.java)
                     result = obj["message"].asString
                     showToast(result);
                 }
+            })
         })
-        try {
-            thread.start()
-        } catch (e: Exception) {
-            Toast.makeText(this,"Nie udało się nawiązać połączenia z bazą.", Toast.LENGTH_LONG).show()
-        }
+        thread.start()
     }
     fun showToast(toast: String?) {
         runOnUiThread {

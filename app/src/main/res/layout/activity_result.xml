@@ -27,6 +27,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="#98bc62"
+                android:text=" Prosze czekać na połaczenie z bazą"
                 android:textSize="18sp"
                 android:textStyle="italic" />
 
