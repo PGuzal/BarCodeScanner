@@ -30,7 +30,7 @@ class ResultActivity : AppCompatActivity() {
             if(result_database.text.toString()==" Nie znaleziono kodu w bazie.")  {
                 startActivity(i)
             }
-            else if (result_database.text.toString()==" Prosze czekać na połaczenie z bazą") {
+            else if (result_database.text.toString()==" Prosze poczekać na połaczenie z bazą") {
                 Toast.makeText(this,"Nie udało się sprawdzić obecności kodu z uwagi na brak połączenia z bazą.", Toast.LENGTH_LONG).show()
                 startActivity(i)
             }
@@ -41,32 +41,28 @@ class ResultActivity : AppCompatActivity() {
     }
 
     fun getJSON(url: String, json: String) {
-        val thread = Thread(Runnable {
-                val client = OkHttpClient()
-                val mediaType = "application/json; charset=utf-8".toMediaType()
-                val request = Request.Builder()
-                    .url(url)
-                    .post(json.toRequestBody(mediaType))
-                    .build()
-                client.newCall(request).enqueue(object: Callback {
-                    override fun onFailure(call: Call, e: IOException) {
-                        showToast("Nie udało się nawiązać połączenia z bazą.")
+            val client = OkHttpClient()
+            val mediaType = "application/json; charset=utf-8".toMediaType()
+            val request = Request.Builder()
+                .url(url)
+                .post(json.toRequestBody(mediaType))
+                .build()
+            client.newCall(request).enqueue(object: Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    showToast("Nie udało się nawiązać połączenia z bazą.")
+                }
+                override fun onResponse(call: Call, response: Response) {
+                    val data = response?.body?.string()
+                    val product = Gson().fromJson(data, Product::class.java)
+                    var results_text = ""
+                    if(product.code.equals("brak")){
+                        results_text = " Nie znaleziono kodu w bazie."
+                    }else {
+                        results_text = " Wartość odżywcza (na 100 g/ml):\n\n Kod: "+product.code+"\n Wartość energetyczna: "+product.calorie+" kcal\n Tłuszcz: "+product.fat+" g\n w tym kwasy tłuszczowe nasycone: "+product.saturated+" g\n Węglowodany: "+product.carb+" g\n w tym cukry: "+product.sugar+" g\n Białko: "+product.protein+" g\n Sól: "+product.sodium+"g"
                     }
-                    override fun onResponse(call: Call, response: Response) {
-                        val data = response?.body?.string()
-                        val gson = Gson()
-                        val product = gson.fromJson(data, Product::class.java)
-                        var results_text = ""
-                        if(product.code.equals("brak")){
-                            results_text = " Nie znaleziono kodu w bazie."
-                        }else {
-                            results_text = " Wartość odżywcza (na 100 g/ml):\n\n Kod: "+product.code+"\n Wartość energetyczna: "+product.calorie+" kcal\n Tłuszcz: "+product.fat+" g\n w tym kwasy tłuszczowe nasycone: "+product.saturated+" g\n Węglowodany: "+product.carb+" g\n w tym cukry: "+product.sugar+" g\n Białko: "+product.protein+" g\n Sól: "+product.sodium+"g"
-                        }
-                        result_database.setText(results_text).toString()
-                    }
-                })
-        })
-        thread.start()
+                    result_database.setText(results_text).toString()
+                }
+            })
     }
 
     fun showToast(toast: String?) {

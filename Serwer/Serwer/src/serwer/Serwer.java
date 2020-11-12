@@ -121,12 +121,12 @@ public class Serwer {
             }	
             else {
             	if(inDB) {
-            		jsonString = "{\"message\": \"Pobrany kod obecny jest w bazie\"}";
+            		jsonString = "{\"message\": \"Pobrany kod obecny jest w bazie.\"}";
             	}
             	else {
 	            	String sql_insert = "INSERT INTO barcode(code, calorie, fat, saturated, carb, sugar, protein, sodium) VALUES ("+data.get(0)+","+data.get(1)+","+data.get(2)+","+data.get(3)+","+data.get(4)+","+data.get(5)+","+data.get(6)+","+data.get(7)+");";
 	            	statement.executeUpdate(sql_insert);
-	            	jsonString = "{\"message\": \"Dodano dane  do bazy\"}";
+	            	jsonString = "{\"message\": \"Dodano dane  do bazy.\"}";
             	}
             }
             statement.close();

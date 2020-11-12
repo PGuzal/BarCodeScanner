@@ -71,28 +71,26 @@ class AddPlace : AppCompatActivity() {
 
     fun saveJSON(url: String, json: String) {
         var result = ""
-        val thread = Thread(Runnable {
-                val client = OkHttpClient()
-                val mediaType = "application/json; charset=utf-8".toMediaType()
-                val request = Request.Builder()
-                    .url(url)
-                    .post(json.toRequestBody(mediaType))
-                    .build()
-            client.newCall(request).enqueue(object: Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    showToast("Nie udało się nawiązać połączenia z bazą.")
-                }
-                override fun onResponse(call: Call, response: Response) {
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-                    val data = response?.body?.string()
-                    val obj: JsonObject = Gson().fromJson(data, JsonObject::class.java)
-                    result = obj["message"].asString
-                    showToast(result);
-                }
-            })
+            val client = OkHttpClient()
+            val mediaType = "application/json; charset=utf-8".toMediaType()
+            val request = Request.Builder()
+                .url(url)
+                .post(json.toRequestBody(mediaType))
+                .build()
+        client.newCall(request).enqueue(object: Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                showToast("Nie udało się nawiązać połączenia z bazą.")
+            }
+            override fun onResponse(call: Call, response: Response) {
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                val data = response?.body?.string()
+                val obj: JsonObject = Gson().fromJson(data, JsonObject::class.java)
+                result = obj["message"].asString
+                showToast(result);
+            }
         })
-        thread.start()
     }
+
     fun showToast(toast: String?) {
         runOnUiThread {
             Toast.makeText(
