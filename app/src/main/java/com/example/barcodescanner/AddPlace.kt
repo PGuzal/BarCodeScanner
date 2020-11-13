@@ -10,7 +10,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_add_place.*
-import kotlinx.android.synthetic.main.activity_result.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -22,8 +21,9 @@ class AddPlace : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_place)
-        title = "KotlinApp"
+        title = "Skaner"
         btn_add.setOnClickListener {
+            val Name_P = Name_entry.text
             val Calorie = Calorie_entry.text
             val Fat = Fat_entry.text
             val Saturated = Saturated_entry.text
@@ -32,13 +32,13 @@ class AddPlace : AppCompatActivity() {
             val Protein = Protein_entry.text
             val Sodium = Sodium_entry.text
             val Barcode = Result_view.text.toString()
-            if(Calorie.isBlank() || Fat.isBlank() || Saturated.isBlank() || Carb.isBlank() || Sugar.isBlank() || Protein.isBlank() || Sodium.isBlank()){
+            if(Calorie.isBlank() || Fat.isBlank() || Saturated.isBlank() || Carb.isBlank() || Sugar.isBlank() || Protein.isBlank() || Sodium.isBlank() || Name_P.isBlank()){
                 Toast.makeText(this,"Nie uzupełniłeś jednego z pól. Jeśli nie znasz wartości wpisz 0.", Toast.LENGTH_LONG).show()
             }else if(Barcode.isBlank()){
                 Toast.makeText(this,"Nie można wprowadzić produktu do bazy bez kodu kreskowego.", Toast.LENGTH_LONG).show()
             }else {
                 val url = "http://10.0.2.2:8000/save"
-                val json = "{\"code\": \"$Barcode\", \"calorie\": \"$Calorie\", \"fat\": \"$Fat\", \"saturated\": \"$Saturated\", \"carb\": \"$Carb\", \"sugar\": \"$Sugar\", \"protein\": \"$Protein\", \"sodium\": \"$Sodium\"}"
+                val json = "{\"code\": \"$Barcode\",\"name\": \"$Name_P\", \"calorie\": \"$Calorie\", \"fat\": \"$Fat\", \"saturated\": \"$Saturated\", \"carb\": \"$Carb\", \"sugar\": \"$Sugar\", \"protein\": \"$Protein\", \"sodium\": \"$Sodium\"}"
                 Toast.makeText(this,"Prosze poczekać na odpowiedź z serwera.", Toast.LENGTH_LONG).show()
                 saveJSON(url, json)
             }

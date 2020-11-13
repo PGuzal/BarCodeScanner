@@ -58,7 +58,7 @@ class ResultActivity : AppCompatActivity() {
                     if(product.code.equals("brak")){
                         results_text = " Nie znaleziono kodu w bazie."
                     }else {
-                        results_text = " Wartość odżywcza (na 100 g/ml):\n\n Kod: "+product.code+"\n Wartość energetyczna: "+product.calorie+" kcal\n Tłuszcz: "+product.fat+" g\n w tym kwasy tłuszczowe nasycone: "+product.saturated+" g\n Węglowodany: "+product.carb+" g\n w tym cukry: "+product.sugar+" g\n Białko: "+product.protein+" g\n Sól: "+product.sodium+"g"
+                        results_text = " Wartość odżywcza (na 100 g/ml):\n\n Kod: "+product.code+"\n\n Nazwa produktu: "+product.name+"\n\n Wartość energetyczna: "+product.calorie+" kcal\n Tłuszcz: "+product.fat+" g\n w tym kwasy tłuszczowe nasycone: "+product.saturated+" g\n Węglowodany: "+product.carb+" g\n w tym cukry: "+product.sugar+" g\n Białko: "+product.protein+" g\n Sól: "+product.sodium+"g"
                     }
                     result_database.setText(results_text).toString()
                 }
