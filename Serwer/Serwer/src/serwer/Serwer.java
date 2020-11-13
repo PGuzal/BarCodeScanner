@@ -43,6 +43,7 @@ public class Serwer {
     				List data = new ArrayList();
     				JSONObject json = receiveJSON(exchange);
     				data.add(json.get("code").toString());
+    				data.add(json.get("name").toString());
     				data.add(json.get("calorie").toString());
     				data.add(json.get("fat").toString());
     				data.add(json.get("saturated").toString());
@@ -112,7 +113,7 @@ public class Serwer {
 	            	String sql_select = "SELECT * FROM barcode WHERE code = "+data.get(0)+";";
 	            	ResultSet result = statement.executeQuery(sql_select);
 	            	if (result.next()) {
-	            		jsonString = "{\"code\": "+result.getString("code")+", \"calorie\": "+result.getString("calorie")+", \"fat\": "+result.getString("fat")+", \"saturated\": "+result.getString("saturated")+", \"carb\": "+result.getString("carb")+", \"sugar\": "+result.getString("sugar")+", \"protein\": "+result.getString("protein")+", \"sodium\": "+result.getString("sodium")+"}";
+	            		jsonString = "{\"code\": "+result.getString("code")+", \"name\": "+result.getString("name")+", \"calorie\": "+result.getString("calorie")+", \"fat\": "+result.getString("fat")+", \"saturated\": "+result.getString("saturated")+", \"carb\": "+result.getString("carb")+", \"sugar\": "+result.getString("sugar")+", \"protein\": "+result.getString("protein")+", \"sodium\": "+result.getString("sodium")+"}";
 	            	}
             	}
             	else {
@@ -124,7 +125,7 @@ public class Serwer {
             		jsonString = "{\"message\": \"Pobrany kod obecny jest w bazie.\"}";
             	}
             	else {
-	            	String sql_insert = "INSERT INTO barcode(code, calorie, fat, saturated, carb, sugar, protein, sodium) VALUES ("+data.get(0)+","+data.get(1)+","+data.get(2)+","+data.get(3)+","+data.get(4)+","+data.get(5)+","+data.get(6)+","+data.get(7)+");";
+	            	String sql_insert = "INSERT INTO barcode(code, name, calorie, fat, saturated, carb, sugar, protein, sodium) VALUES ("+data.get(0)+","+data.get(1)+","+data.get(2)+","+data.get(3)+","+data.get(4)+","+data.get(5)+","+data.get(6)+","+data.get(7)+","+data.get(8)+");";
 	            	statement.executeUpdate(sql_insert);
 	            	jsonString = "{\"message\": \"Dodano dane  do bazy.\"}";
             	}
