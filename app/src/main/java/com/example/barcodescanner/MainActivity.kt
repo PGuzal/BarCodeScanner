@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, ResultActivity::class.java)
             if(result != null){
                 if(result.contents == null){
-                    Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Skanowanie nieudane.",Toast.LENGTH_LONG).show()
                 }else{
                     intent.putExtra("result_code",result.contents)
                     startActivity(intent)

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -78,10 +79,11 @@ public class Serwer {
     
     public static void sendJSON(HttpExchange exchange, String response) throws IOException {
     	try {
-    		exchange.getResponseHeaders().set("Content-Type", "appication/json");
-            exchange.sendResponseHeaders(200, response.length());
+    		byte[] bytes = response.getBytes("UTF-8");
+    		exchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
+    		exchange.sendResponseHeaders(200, bytes.length);
             OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
+            os.write(bytes);
             os.close();
     	} catch (IOException e) {
             e.printStackTrace();
@@ -95,7 +97,7 @@ public class Serwer {
     	String jsonString = "";
     	try{
     		Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/barcode_data","root", "");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/barcode_data?useUnicode=true&characterEncoding=utf-8","root", "");
             Statement statement = connection.createStatement();
             System.out.println("Database is connected!");
             String sql_check = "SELECT * FROM barcode WHERE code = "+data.get(0)+";";
@@ -122,12 +124,12 @@ public class Serwer {
             }	
             else {
             	if(inDB) {
-            		jsonString = "{\"message\": \"Pobrany kod obecny jest w bazie.\"}";
+            		jsonString = "{\"message\": \"Pobrany kod jest ju¿ obecny jest w bazie.\"}";
             	}
             	else {
-	            	String sql_insert = "INSERT INTO barcode(code, name, calorie, fat, saturated, carb, sugar, protein, sodium) VALUES ("+data.get(0)+","+data.get(1)+","+data.get(2)+","+data.get(3)+","+data.get(4)+","+data.get(5)+","+data.get(6)+","+data.get(7)+","+data.get(8)+");";
+	            	String sql_insert = "INSERT INTO barcode(code, name, calorie, fat, saturated, carb, sugar, protein, sodium) VALUES ("+data.get(0)+",\""+data.get(1)+"\","+data.get(2)+","+data.get(3)+","+data.get(4)+","+data.get(5)+","+data.get(6)+","+data.get(7)+","+data.get(8)+");";
 	            	statement.executeUpdate(sql_insert);
-	            	jsonString = "{\"message\": \"Dodano dane  do bazy.\"}";
+	            	jsonString = "{\"message\": \"Dodano dane do bazy.\"}";
             	}
             }
             statement.close();

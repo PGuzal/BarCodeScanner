@@ -59,7 +59,7 @@ class AddPlace : AppCompatActivity() {
             val textView: TextView = findViewById(R.id.Result_view) as TextView
             if(result != null){
                 if(result.contents == null){
-                    Toast.makeText(this,"Cancelled", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Skanowanie nieudane.", Toast.LENGTH_LONG).show()
                 }else{
                     textView.setText(result.contents).toString()
                 }
