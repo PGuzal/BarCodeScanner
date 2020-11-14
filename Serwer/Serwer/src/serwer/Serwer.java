@@ -20,12 +20,12 @@ public class Serwer {
     	HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8000), 0);
     	ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor)Executors.newFixedThreadPool(10);
     	//obs³uga pobierania danych na podstawie kodu kreskowego
-    	server.createContext("/send", new  HttpHandler() {
+    	server.createContext("/receive", new  HttpHandler() {
     		@Override
     	    public void handle(HttpExchange exchange) throws IOException {
     			try {
     				List data = new ArrayList();
-    				JSONObject json = receiveJSON(exchange);
+    				JSONObject json = requestJSON(exchange);
     				data.add(json.get("code").toString());
     				String response = connectDB(true, data);
     				respondJSON(exchange, response);
@@ -41,7 +41,7 @@ public class Serwer {
     	    public void handle(HttpExchange exchange) throws IOException {
     			try {
     				List data = new ArrayList();
-    				JSONObject json = receiveJSON(exchange);
+    				JSONObject json = requestJSON(exchange);
     				data.add(json.get("code").toString());
     				data.add(json.get("name").toString());
     				data.add(json.get("calorie").toString());
@@ -65,7 +65,7 @@ public class Serwer {
     }
 
     //odbieranie danych w formacie JSON
-    public static JSONObject receiveJSON(HttpExchange exchange) throws IOException {
+    public static JSONObject requestJSON(HttpExchange exchange) throws IOException {
     	try {
     		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), "UTF-8"));
     		JSONTokener tokener = new JSONTokener(bufferedReader);

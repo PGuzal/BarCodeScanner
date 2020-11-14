@@ -17,9 +17,9 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
         val Barcode = intent.getStringExtra("result_code");
-        val url = "http://10.0.2.2:8000/send" //ustalenie odnośnika mającego obsłużyć żądanie
+        val url = "http://10.0.2.2:8000/receive" //ustalenie odnośnika mającego obsłużyć żądanie
         val json = "{\"code\": \"$Barcode\"}" //tworzenie treści wiadomości do wysłania
-        sendJSON(url, json)
+        receiveJSON(url, json)
         menu_btn.setOnClickListener {
             val i = Intent(this@ResultActivity, MainActivity::class.java)
             startActivity(i)
@@ -40,7 +40,7 @@ class ResultActivity : AppCompatActivity() {
     }
 
     //przesłanie kodu do uzyskania informacji oraz obsługa odpowiedzi
-    fun sendJSON(url: String, json: String) {
+    fun receiveJSON(url: String, json: String) {
             val client = OkHttpClient()
             val mediaType = "application/json; charset=utf-8".toMediaType()
             val request = Request.Builder() //tworzenie wiadomości do wysłania
