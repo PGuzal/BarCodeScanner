@@ -5,12 +5,9 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -22,7 +19,8 @@ public class Serwer {
     public static void main(String[] args) throws IOException {
     	HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8000), 0);
     	ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor)Executors.newFixedThreadPool(10);
-    	server.createContext("/get", new  HttpHandler() {
+    	//obs³uga pobierania danych na podstawie kodu kreskowego
+    	server.createContext("/send", new  HttpHandler() {
     		@Override
     	    public void handle(HttpExchange exchange) throws IOException {
     			try {
@@ -30,13 +28,14 @@ public class Serwer {
     				JSONObject json = receiveJSON(exchange);
     				data.add(json.get("code").toString());
     				String response = connectDB(true, data);
-	    	    	sendJSON(exchange, response);
+    				respondJSON(exchange, response);
     	        } catch (IOException e) {
                     e.printStackTrace();
                     throw e;
                 }	    	    	
     		}
     	});
+    	//obs³uga zapisywania nowych danych do bazy
     	server.createContext("/save", new  HttpHandler() {
     		@Override
     	    public void handle(HttpExchange exchange) throws IOException {
@@ -53,7 +52,7 @@ public class Serwer {
     				data.add(json.get("protein").toString());
     				data.add(json.get("sodium").toString());
     				String response = connectDB(false, data);
-	    	    	sendJSON(exchange, response);
+    				respondJSON(exchange, response);
     	        } catch (IOException e) {
                     e.printStackTrace();
                     throw e;
@@ -65,6 +64,7 @@ public class Serwer {
     	System.out.println("Server started on port 8000");
     }
 
+    //odbieranie danych w formacie JSON
     public static JSONObject receiveJSON(HttpExchange exchange) throws IOException {
     	try {
     		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), "UTF-8"));
@@ -77,7 +77,8 @@ public class Serwer {
         }
     }    
     
-    public static void sendJSON(HttpExchange exchange, String response) throws IOException {
+    //wysy³anie danych w formacie JSON
+    public static void respondJSON(HttpExchange exchange, String response) throws IOException {
     	try {
     		byte[] bytes = response.getBytes("UTF-8");
     		exchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
@@ -91,6 +92,7 @@ public class Serwer {
         }
     }
     
+    //wymiana danych miêdzy serwerem a baz¹
     public static String connectDB(Boolean isGet, List data) {
     	List results = new ArrayList();
     	Boolean inDB = false;
@@ -100,6 +102,7 @@ public class Serwer {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/barcode_data?useUnicode=true&characterEncoding=utf-8","root", "");
             Statement statement = connection.createStatement();
             System.out.println("Database is connected!");
+            //sprawdzanie czy przes³any kod znajduje siê ju¿ w bazie
             String sql_check = "SELECT * FROM barcode WHERE code = "+data.get(0)+";";
             ResultSet check = statement.executeQuery(sql_check);
             if(check.next()) {
@@ -110,22 +113,28 @@ public class Serwer {
             		inDB = true;
             	}
             }
+            //dla pobierania danych na podstawie kodu kreskowego 
             if(isGet) {
+            	//dla obecnoœci kodu w bazie - pobranie danych
             	if(inDB) {
 	            	String sql_select = "SELECT * FROM barcode WHERE code = "+data.get(0)+";";
 	            	ResultSet result = statement.executeQuery(sql_select);
 	            	if (result.next()) {
-	            		jsonString = "{\"code\": "+result.getString("code")+", \"name\": "+result.getString("name")+", \"calorie\": "+result.getString("calorie")+", \"fat\": "+result.getString("fat")+", \"saturated\": "+result.getString("saturated")+", \"carb\": "+result.getString("carb")+", \"sugar\": "+result.getString("sugar")+", \"protein\": "+result.getString("protein")+", \"sodium\": "+result.getString("sodium")+"}";
+	            		jsonString = "{\"code\": "+result.getString("code")+", \"name\": \""+result.getString("name")+"\", \"calorie\": "+result.getString("calorie")+", \"fat\": "+result.getString("fat")+", \"saturated\": "+result.getString("saturated")+", \"carb\": "+result.getString("carb")+", \"sugar\": "+result.getString("sugar")+", \"protein\": "+result.getString("protein")+", \"sodium\": "+result.getString("sodium")+"}";
 	            	}
             	}
+            	//dla braku kodu w bazie - ustawienie danych na informacje o braku kodu w bazie
             	else {
             		jsonString = "{\"code\": \"brak\"}";
             	}
             }	
+            //dla zapisywania nowych danych do bazy
             else {
+            	//dla obecnosci kodu w bazie - stworzenie wiadomoœci informuj¹cej o niemo¿liwoœci wykonania procesu
             	if(inDB) {
             		jsonString = "{\"message\": \"Pobrany kod jest ju¿ obecny jest w bazie.\"}";
             	}
+            	//dla braku kodu w bazie - stworzenie wiadomoœci informuj¹cej o wykonanym procesie
             	else {
 	            	String sql_insert = "INSERT INTO barcode(code, name, calorie, fat, saturated, carb, sugar, protein, sodium) VALUES ("+data.get(0)+",\""+data.get(1)+"\","+data.get(2)+","+data.get(3)+","+data.get(4)+","+data.get(5)+","+data.get(6)+","+data.get(7)+","+data.get(8)+");";
 	            	statement.executeUpdate(sql_insert);

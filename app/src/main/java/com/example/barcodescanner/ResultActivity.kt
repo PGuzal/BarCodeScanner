@@ -17,9 +17,9 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
         val Barcode = intent.getStringExtra("result_code");
-        val url = "http://10.0.2.2:8000/get"
-        val json = "{\"code\": \"$Barcode\"}"
-        getJSON(url, json)
+        val url = "http://10.0.2.2:8000/send" //ustalenie odnośnika mającego obsłużyć żądanie
+        val json = "{\"code\": \"$Barcode\"}" //tworzenie treści wiadomości do wysłania
+        sendJSON(url, json)
         menu_btn.setOnClickListener {
             val i = Intent(this@ResultActivity, MainActivity::class.java)
             startActivity(i)
@@ -39,17 +39,19 @@ class ResultActivity : AppCompatActivity() {
         }
     }
 
-    fun getJSON(url: String, json: String) {
+    //przesłanie kodu do uzyskania informacji oraz obsługa odpowiedzi
+    fun sendJSON(url: String, json: String) {
             val client = OkHttpClient()
             val mediaType = "application/json; charset=utf-8".toMediaType()
-            val request = Request.Builder()
+            val request = Request.Builder() //tworzenie wiadomości do wysłania
                 .url(url)
                 .post(json.toRequestBody(mediaType))
                 .build()
-            client.newCall(request).enqueue(object: Callback {
+            client.newCall(request).enqueue(object: Callback { //próba przesłania danych
                 override fun onFailure(call: Call, e: IOException) {
                     showToast("Nie udało się nawiązać połączenia z bazą.")
                 }
+                //obsługa odpowiedzi - wyświetlenie odebranych informacji
                 override fun onResponse(call: Call, response: Response) {
                     val data = response?.body?.string()
                     val product = Gson().fromJson(data, Product::class.java)
@@ -64,6 +66,7 @@ class ResultActivity : AppCompatActivity() {
             })
     }
 
+    //tworzenie komunikatów
     fun showToast(toast: String?) {
         runOnUiThread {
             Toast.makeText(

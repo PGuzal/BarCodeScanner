@@ -33,12 +33,12 @@ class AddPlace : AppCompatActivity() {
             val Sodium = Sodium_entry.text
             val Barcode = Result_view.text.toString()
             if(Calorie.isBlank() || Fat.isBlank() || Saturated.isBlank() || Carb.isBlank() || Sugar.isBlank() || Protein.isBlank() || Sodium.isBlank() || Name_P.isBlank()){
-                Toast.makeText(this,"Nie uzupełniłeś jednego z pól. Jeśli nie znasz wartości wpisz 0.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this,"Nie uzupełniłeś któregoś z pól. Jeśli nie znasz wartości wpisz 0.", Toast.LENGTH_LONG).show()
             }else if(Barcode.isBlank()){
                 Toast.makeText(this,"Nie można wprowadzić produktu do bazy bez kodu kreskowego.", Toast.LENGTH_LONG).show()
             }else {
-                val url = "http://10.0.2.2:8000/save"
-                val json = "{\"code\": \"$Barcode\",\"name\": \"$Name_P\", \"calorie\": \"$Calorie\", \"fat\": \"$Fat\", \"saturated\": \"$Saturated\", \"carb\": \"$Carb\", \"sugar\": \"$Sugar\", \"protein\": \"$Protein\", \"sodium\": \"$Sodium\"}"
+                val url = "http://10.0.2.2:8000/save" //ustalenie odnośnika mającego obsłużyć żądanie
+                val json = "{\"code\": \"$Barcode\",\"name\": \"$Name_P\", \"calorie\": \"$Calorie\", \"fat\": \"$Fat\", \"saturated\": \"$Saturated\", \"carb\": \"$Carb\", \"sugar\": \"$Sugar\", \"protein\": \"$Protein\", \"sodium\": \"$Sodium\"}" //tworzenie treści wiadomości do wysłania
                 Toast.makeText(this,"Prosze poczekać na odpowiedź z serwera.", Toast.LENGTH_LONG).show()
                 saveJSON(url, json)
             }
@@ -69,18 +69,20 @@ class AddPlace : AppCompatActivity() {
         }
     }
 
+    //przesłanie danych do zapisu oraz obsługa odpowiedzi
     fun saveJSON(url: String, json: String) {
         var result = ""
             val client = OkHttpClient()
             val mediaType = "application/json; charset=utf-8".toMediaType()
-            val request = Request.Builder()
+            val request = Request.Builder() //tworzenie wiadomości do wysłania
                 .url(url)
                 .post(json.toRequestBody(mediaType))
                 .build()
-        client.newCall(request).enqueue(object: Callback {
+        client.newCall(request).enqueue(object: Callback { //próba przesłania danych
             override fun onFailure(call: Call, e: IOException) {
                 showToast("Nie udało się nawiązać połączenia z bazą.")
             }
+            //obsługa odpowiedzi - wyświetlenie odebranej wiadomości
             override fun onResponse(call: Call, response: Response) {
                 if (!response.isSuccessful) throw IOException("Unexpected code $response")
                 val data = response?.body?.string()
@@ -91,6 +93,7 @@ class AddPlace : AppCompatActivity() {
         })
     }
 
+    //tworzenie komunikatów
     fun showToast(toast: String?) {
         runOnUiThread {
             Toast.makeText(
