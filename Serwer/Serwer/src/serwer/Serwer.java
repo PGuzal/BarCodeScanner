@@ -19,7 +19,6 @@ public class Serwer {
     public static void main(String[] args) throws IOException {
     	HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8000), 0);
     	ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor)Executors.newFixedThreadPool(10);
-    	//obs³uga pobierania danych na podstawie kodu kreskowego
     	server.createContext("/receive", new  HttpHandler() {
     		@Override
     	    public void handle(HttpExchange exchange) throws IOException {
