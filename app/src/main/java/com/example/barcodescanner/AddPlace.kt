@@ -71,26 +71,25 @@ class AddPlace : AppCompatActivity() {
 
     //przesłanie danych do zapisu oraz obsługa odpowiedzi
     fun saveJSON(url: String, json: String) {
-        var result = ""
-            val client = OkHttpClient()
-            val mediaType = "application/json; charset=utf-8".toMediaType()
-            val request = Request.Builder() //tworzenie wiadomości do wysłania
-                .url(url)
-                .post(json.toRequestBody(mediaType))
-                .build()
-        client.newCall(request).enqueue(object: Callback { //próba przesłania danych
-            override fun onFailure(call: Call, e: IOException) {
-                showToast("Nie udało się nawiązać połączenia z bazą.")
-            }
-            //obsługa odpowiedzi - wyświetlenie odebranej wiadomości
-            override fun onResponse(call: Call, response: Response) {
-                if (!response.isSuccessful) throw IOException("Unexpected code $response")
-                val data = response?.body?.string()
-                val obj: JsonObject = Gson().fromJson(data, JsonObject::class.java)
-                result = obj["message"].asString
-                showToast(result);
-            }
-        })
+        val client = OkHttpClient()
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val request = Request.Builder() //tworzenie wiadomości do wysłania
+            .url(url)
+            .post(json.toRequestBody(mediaType))
+            .build()
+    client.newCall(request).enqueue(object: Callback { //próba przesłania danych
+        override fun onFailure(call: Call, e: IOException) {
+            showToast("Nie udało się nawiązać połączenia z bazą.")
+        }
+        //obsługa odpowiedzi - wyświetlenie odebranej wiadomości
+        override fun onResponse(call: Call, response: Response) {
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+            val data = response?.body?.string()
+            val obj: JsonObject = Gson().fromJson(data, JsonObject::class.java)
+            val result = obj["message"].asString
+            showToast(result);
+        }
+    })
     }
 
     //tworzenie komunikatów

@@ -41,29 +41,29 @@ class ResultActivity : AppCompatActivity() {
 
     //przesłanie kodu do uzyskania informacji oraz obsługa odpowiedzi
     fun receiveJSON(url: String, json: String) {
-            val client = OkHttpClient()
-            val mediaType = "application/json; charset=utf-8".toMediaType()
-            val request = Request.Builder() //tworzenie wiadomości do wysłania
-                .url(url)
-                .post(json.toRequestBody(mediaType))
-                .build()
-            client.newCall(request).enqueue(object: Callback { //próba przesłania danych
-                override fun onFailure(call: Call, e: IOException) {
-                    showToast("Nie udało się nawiązać połączenia z bazą.")
+        val client = OkHttpClient()
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val request = Request.Builder() //tworzenie wiadomości do wysłania
+            .url(url)
+            .post(json.toRequestBody(mediaType))
+            .build()
+        client.newCall(request).enqueue(object: Callback { //próba przesłania danych
+            override fun onFailure(call: Call, e: IOException) {
+                showToast("Nie udało się nawiązać połączenia z bazą.")
+            }
+            //obsługa odpowiedzi - wyświetlenie odebranych informacji
+            override fun onResponse(call: Call, response: Response) {
+                val data = response?.body?.string()
+                val product = Gson().fromJson(data, Product::class.java)
+                var results_text = ""
+                if(product.code.equals("brak")){
+                    results_text = " Nie znaleziono kodu w bazie."
+                }else {
+                    results_text = " Wartość odżywcza (na 100 g/ml):\n\n Kod: "+product.code+"\n\n Nazwa produktu: "+product.name+"\n\n Wartość energetyczna: "+product.calorie+" kcal\n Tłuszcz: "+product.fat+" g\n w tym kwasy tłuszczowe nasycone: "+product.saturated+" g\n Węglowodany: "+product.carb+" g\n w tym cukry: "+product.sugar+" g\n Białko: "+product.protein+" g\n Sól: "+product.sodium+"g"
                 }
-                //obsługa odpowiedzi - wyświetlenie odebranych informacji
-                override fun onResponse(call: Call, response: Response) {
-                    val data = response?.body?.string()
-                    val product = Gson().fromJson(data, Product::class.java)
-                    var results_text = ""
-                    if(product.code.equals("brak")){
-                        results_text = " Nie znaleziono kodu w bazie."
-                    }else {
-                        results_text = " Wartość odżywcza (na 100 g/ml):\n\n Kod: "+product.code+"\n\n Nazwa produktu: "+product.name+"\n\n Wartość energetyczna: "+product.calorie+" kcal\n Tłuszcz: "+product.fat+" g\n w tym kwasy tłuszczowe nasycone: "+product.saturated+" g\n Węglowodany: "+product.carb+" g\n w tym cukry: "+product.sugar+" g\n Białko: "+product.protein+" g\n Sól: "+product.sodium+"g"
-                    }
-                    result_database.setText(results_text).toString()
-                }
-            })
+                result_database.setText(results_text).toString()
+            }
+        })
     }
 
     //tworzenie komunikatów
