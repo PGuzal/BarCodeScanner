@@ -26,10 +26,15 @@ public class Serwer {
     				List data = new ArrayList();
     				JSONObject json = requestJSON(exchange);
     				data.add(json.get("code").toString());
-    				String response = connectDB(true, data);
-    				respondJSON(exchange, response);
-    	        } catch (IOException e) {
-                    e.printStackTrace();
+    				String response = connectDB(true, data, exchange);
+    				if (response!="NO") {
+    					respondJSON(exchange, response);
+    				}
+    				else {
+    					respondJSON(exchange, "{\"code\": \"brakdb\"}");
+    				}
+    	        } catch (IOException e) {    	        	
+    	        	e.printStackTrace();
                     throw e;
                 }	    	    	
     		}
@@ -50,10 +55,16 @@ public class Serwer {
     				data.add(json.get("sugar").toString());
     				data.add(json.get("protein").toString());
     				data.add(json.get("sodium").toString());
-    				String response = connectDB(false, data);
-    				respondJSON(exchange, response);
+    				String response = connectDB(false, data, exchange);
+    				if (response!="NO") {
+    					respondJSON(exchange, response);
+    				}
+    				else {
+    	    	        	respondJSON(exchange, "{\"message\": \"Nie uda³o siê nawi¹zaæ po³¹czenia z baz¹.\"}");
+    				}
+    				
     	        } catch (IOException e) {
-                    e.printStackTrace();
+    	        	e.printStackTrace();
                     throw e;
                 }
     		}
@@ -92,7 +103,7 @@ public class Serwer {
     }
     
     //wymiana danych miêdzy serwerem a baz¹
-    public static String connectDB(Boolean isGet, List data) {
+    public static String connectDB(Boolean isGet, List data, HttpExchange exchange) {
     	List results = new ArrayList();
     	Boolean inDB = false;
     	String jsonString = "";
@@ -145,6 +156,7 @@ public class Serwer {
          }
          catch(Exception e) {
             System.out.println("Do not connect to DB - Error:"+e);
+            jsonString = "NO";
          }
 		return jsonString;
     }

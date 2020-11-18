@@ -26,11 +26,11 @@ class ResultActivity : AppCompatActivity() {
         }
         btn_addAc.setOnClickListener {
             val i = Intent(this@ResultActivity, AddPlace::class.java)
-            if(result_database.text.toString()==" Nie znaleziono kodu w bazie.")  {
+            if(result_database.text.toString()==" Nie znaleziono kodu w bazie")  {
                 startActivity(i)
             }
-            else if (result_database.text.toString()==" Prosze poczekać na połaczenie z bazą") {
-                Toast.makeText(this,"Nie udało się sprawdzić obecności kodu z uwagi na brak połączenia z bazą.", Toast.LENGTH_LONG).show()
+            else if (result_database.text.toString()==" Proszę poczekać na połączenie z bazą") {
+                Toast.makeText(this,"Nie udało się sprawdzić obecności kodu z uwagi na brak połączenia.", Toast.LENGTH_LONG).show()
                 startActivity(i)
             }
             else {
@@ -49,7 +49,7 @@ class ResultActivity : AppCompatActivity() {
             .build()
         client.newCall(request).enqueue(object: Callback { //próba przesłania danych
             override fun onFailure(call: Call, e: IOException) {
-                showToast("Nie udało się nawiązać połączenia z bazą.")
+                showToast("Nie udało się nawiązać połączenia z serwerem.")
             }
             //obsługa odpowiedzi - wyświetlenie odebranych informacji
             override fun onResponse(call: Call, response: Response) {
@@ -57,7 +57,9 @@ class ResultActivity : AppCompatActivity() {
                 val product = Gson().fromJson(data, Product::class.java)
                 var results_text = ""
                 if(product.code.equals("brak")){
-                    results_text = " Nie znaleziono kodu w bazie."
+                    results_text = " Nie znaleziono kodu w bazie"
+                }else if(product.code.equals("brakdb")){
+                    showToast("Nie udało się nawiązać połączenia z bazą danych.")
                 }else {
                     results_text = " Wartość odżywcza (na 100 g/ml):\n\n Kod: "+product.code+"\n\n Nazwa produktu: "+product.name+"\n\n Wartość energetyczna: "+product.calorie+" kcal\n Tłuszcz: "+product.fat+" g\n w tym kwasy tłuszczowe nasycone: "+product.saturated+" g\n Węglowodany: "+product.carb+" g\n w tym cukry: "+product.sugar+" g\n Białko: "+product.protein+" g\n Sól: "+product.sodium+"g"
                 }

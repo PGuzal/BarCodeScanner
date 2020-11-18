@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2c5f2d"
+    android:background="@color/colorDark"
     tools:context=".ResultActivity">
 
     <ScrollView
@@ -26,8 +26,8 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
-                android:background="#98bc62"
-                android:text=" Prosze czekać na połaczenie z bazą"
+                android:background="@color/colorLight"
+                android:text=" Proszę poczekać na połączenie z bazą"
                 android:textSize="18sp"
                 android:textStyle="italic" />
 
@@ -39,8 +39,9 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:background="#98bc62"
-                android:text="Dodaj do bazy"
+                android:background="@color/colorLight"
+                android:hint="@string/add_button"
+                android:textColorHint="@color/colorButton"
                 android:textSize="18sp" />
 
             <Button
@@ -51,8 +52,9 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:background="#98bc62"
-                android:text="Menu"
+                android:background="@color/colorLight"
+                android:hint="@string/menu_button"
+                android:textColorHint="@color/colorButton"
                 android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>

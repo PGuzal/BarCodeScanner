@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2c5f2d"
+    android:background="@color/colorDark"
     tools:context=".AddPlace">
 
     <ScrollView
@@ -24,29 +24,29 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/info_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="20dp"
-                android:text="Proszę podawać wartości\n w kcal lub g na 100 g/ml produktu."
+                android:hint="@string/info_label"
+                android:textColorHint="@color/colorText"
                 android:textAlignment="center"
-                android:textColor="#d8edd8"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/name_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:text="Nazwa"
-                android:textColor="#d8edd8"
+                android:hint="@string/name_label"
+                android:textColorHint="@color/colorText"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -59,21 +59,21 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
-                android:textColor="#d8edd8"
+                android:textColor="@color/colorText"
                 android:inputType="textAutoCorrect" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/calorie_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:text="Wartość energetyczna"
-                android:textColor="#d8edd8"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+                android:hint="@string/calorie_label"
+                android:textColorHint="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/Calorie_entry"
@@ -84,21 +84,21 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
-                android:textColor="#d8edd8"
+                android:textColor="@color/colorText"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/fat_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:text="Tłuszcz"
-                android:textColor="#d8edd8"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+                android:hint="@string/fat_label"
+                android:textColorHint="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/Fat_entry"
@@ -109,21 +109,21 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
-                android:textColor="#d8edd8"
+                android:textColor="@color/colorText"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/saturated_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:text="w tym kwasy tłuszczowe nasycone"
-                android:textColor="#d8edd8"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+                android:hint="@string/saturated_label"
+                android:textColorHint="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/Saturated_entry"
@@ -134,19 +134,19 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
-                android:textColor="#d8edd8"
+                android:textColor="@color/colorText"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/carb_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:text="Węglowodany"
-                android:textColor="#d8edd8"
+                android:hint="@string/carb_label"
+                android:textColorHint="@color/colorText"
                 android:textStyle="bold"
                 android:textSize="20sp" />
 
@@ -159,21 +159,21 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
-                android:textColor="#d8edd8"
+                android:textColor="@color/colorText"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/sugar_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:text="w tym cukry"
-                android:textColor="#d8edd8"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+                android:hint="@string/sugar_label"
+                android:textColorHint="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/Sugar_entry"
@@ -184,19 +184,19 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
-                android:textColor="#d8edd8"
+                android:textColor="@color/colorText"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/protein_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:text="Białko"
-                android:textColor="#d8edd8"
+                android:hint="@string/protein_label"
+                android:textColorHint="@color/colorText"
                 android:textStyle="bold"
                 android:textSize="20sp" />
 
@@ -209,18 +209,19 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
-                android:textColor="#d8edd8"
+                android:textColor="@color/colorText"
                 android:inputType="numberDecimal|numberSigned" />
+
             <TextView
-                android:id="@+id/sol"
+                android:id="@+id/sodium_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:text="Sól"
-                android:textColor="#d8edd8"
+                android:hint="@string/sodium_label"
+                android:textColorHint="@color/colorText"
                 android:textStyle="bold"
                 android:textSize="20sp" />
 
@@ -233,7 +234,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
-                android:textColor="#d8edd8"
+                android:textColor="@color/colorText"
                 android:inputType="numberDecimal|numberSigned" />
 
             <TextView
@@ -255,8 +256,9 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:background="#98bc62"
-                android:text="Zeskanuj"
+                android:background="@color/colorLight"
+                android:hint="@string/scan_button"
+                android:textColorHint="@color/colorButton"
                 android:textSize="18sp" />
 
             <Button
@@ -267,8 +269,9 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:background="#98bc62"
-                android:text="Dodaj"
+                android:background="@color/colorLight"
+                android:hint="@string/add_button"
+                android:textColorHint="@color/colorButton"
                 android:textSize="18sp" />
 
             <Button
@@ -279,8 +282,9 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:background="#98bc62"
-                android:text="Menu"
+                android:background="@color/colorLight"
+                android:hint="@string/menu_button"
+                android:textColorHint="@color/colorButton"
                 android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>

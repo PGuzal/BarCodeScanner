@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Skaner</string>
+    <string name="scan_button">ZESKANUJ</string>
+    <string name="add_button">DODAJ DO BAZY</string>
+    <string name="menu_button">MENU</string>
+    <string name="info_label">Proszę podawać wartości\n w kcal lub g na 100 g/ml produktu.</string>
+    <string name="name_label">Nazwa</string>
+    <string name="calorie_label">Wartość energetyczna</string>
+    <string name="fat_label">Tłuszcz</string>
+    <string name="saturated_label">w tym kwasy tłuszczowe nasycone</string>
+    <string name="carb_label">Węglowodany</string>
+    <string name="sugar_label">w tym cukry</string>
+    <string name="protein_label">Białko</string>
+    <string name="sodium_label">Sól</string>
 </resources>
